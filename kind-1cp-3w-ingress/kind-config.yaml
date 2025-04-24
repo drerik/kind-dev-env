@@ -1,0 +1,23 @@
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+name: kind-1cp-3w-ingress
+nodes:
+- role: control-plane
+  kubeadmConfigPatches:
+  - |
+    kind: InitConfiguration
+    nodeRegistration:
+      kubeletExtraArgs:
+        node-labels: "ingress-ready=true"
+  extraPortMappings:
+  - containerPort: 8080
+    hostPort: 8080
+    protocol: TCP
+    listenAddress: "127.0.0.1"
+  - containerPort: 8443
+    hostPort: 8443
+    protocol: TCP
+    listenAddress: "127.0.0.1"
+- role: worker
+- role: worker
+- role: worker
